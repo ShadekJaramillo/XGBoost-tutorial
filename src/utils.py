@@ -22,6 +22,7 @@ def csv_to_db_file(csv_data:str):
         try:
             df = read_csv(StringIO(csv_data))
             df.to_sql('diabetes_data', connection, if_exists='replace')
+            print(f'Data successfully written to database at {diabetes_db_path}')
         except ValueError as e:
             print(f'An error occurred while adding the table to the database, this is likely because the database already contains that table:\n    {e}')
 
@@ -31,6 +32,7 @@ def load_diabetes_db():
         try:
             query = 'SELECT * FROM diabetes_data'
             df = read_sql_query(query, connection, index_col='index')
+            print('Database successfully loaded')
             return df
         except Exception as e:
             print(f'An error occurred while reading the database: {e}')
@@ -40,13 +42,14 @@ def save_raw_csv(data:str):
     diabetes_csv_path = os.path.join(paths['root_dir'], relative_paths['raw_data']+'.csv')
     with open(diabetes_csv_path, 'w') as f:
         f.write(data)
-    path = os.path.join(paths['root_dir'], relative_paths['raw_data']+'.csv')
+    print(f'Data successfully saved to csv in {diabetes_csv_path}')
 
 def fetch_data() -> str:   
     try:
         with requests.get(DATA_URL, timeout = 20) as response:
             response.raise_for_status()
             data = response.text
+            print(f'Data successfully fetched from {DATA_URL[50]}')
             return data
             
     except requests.exceptions.HTTPError as e:
@@ -72,6 +75,7 @@ def create_db():
             );
             """
         )
+        print(f'Database successfully created at {diabetes_db_path}')
 
 if __name__ == "__main__":
     csv_data = fetch_data()
