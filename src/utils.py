@@ -37,6 +37,7 @@ def load_diabetes_db():
 
 
 def save_raw_csv(data:str):
+    diabetes_csv_path = os.path.join(paths['root_dir'], relative_paths['raw_data']+'.csv')
     with open(path, 'w') as f:
         f.write(data)
     path = os.path.join(paths['root_dir'], relative_paths['raw_data']+'.csv')
