@@ -25,7 +25,7 @@ def csv_to_db_file(csv_data:str):
         except ValueError as e:
             print(f'An error occurred while adding the table to the database, this is likely because the database already contains that table:\n    {e}')
 
-def load_db():
+def load_diabetes_db():
     diabetes_db_path = os.path.join(paths['root_dir'], relative_paths['raw_data']+'.db')
     with sqlite3.connect(diabetes_db_path) as connection:
         try:
